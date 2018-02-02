@@ -1,2 +1,2 @@
-# wp-login-record
+# WP Login Record
 WodPress plugin in development
