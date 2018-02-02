@@ -1,0 +1,83 @@
+.log-page-title {
+    font-size: 50px;
+    padding: 50px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.log-section {
+    font-size: 18px;
+    margin: 40px 0;
+    width: 960px;
+    background-color: #ffffff;
+}
+
+.log-form-row {
+    padding: 25px;
+    overflow: hidden;
+    clear: both;
+}
+
+.log-form-label {
+    display: block;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #0085ba;
+}
+
+.log-form-caption {
+    font-style: italic;
+}
+
+.log-form-checkbox {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.log-form-checkbox-list, .log-form-radio-list {
+    font-size: 15px;
+}
+
+.log-form-title {
+    font-size: 30px;
+    margin: 10px 0 0 0;
+}
+
+.log-form-title-icon {
+    font-size: 40px;
+    vertical-align: sub;
+    padding-right: 15px;
+}
+
+.log-form-col, .log-form-col--half {
+    padding-left: 8px;
+}
+
+.log-submit-button {
+    margin-bottom: 20px !important;
+}
+
+.log-notice {
+    margin-top: -20px !important;
+    margin-bottom: 25px !important;
+    margin-left: 0 !important;
+    max-width: 650px !important;
+}
+
+.footer-text {
+    font-size: 15px;
+    padding: 17px;
+    color: #6E869C;
+    font-style: italic;    
+}
+
+.footer-image {
+    max-width: 200px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    margin-top: -10px;
+}
+
+.log-chart-wrapper {
+    width: 800px;
+    height: 500px;
+}
