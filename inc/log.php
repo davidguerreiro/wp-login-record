@@ -361,17 +361,22 @@ class Log {
     /**
      * Get login records
      * 
-     * @param String $type Default to 'total'.
-     * @param int    $limit Default to 20.
+     * TODO: Add filter by current user id not included and current date.
+     * 
+     * @param String $date Date to filter records by.
      * @return Array $data.
      */
-    /*
-    public static function get_records( $type = 'total', $limit = 20 ) {
+    public static function get_records( $date = null ) {
         global $wpdb;
         $table_name = $wpdb->prefix . self::$sessions_table_name;
         $data       = array();
+        $current_user_id = get_current_user_id();
 
-        $query = "SELECT * FROM " . $table_name . " LIMIT " . $limit;
+        if ( is_null( $date ) ) {
+            $date = date( 'Y-m-d' );
+        }
+
+        $query = "SELECT * FROM " . $table_name;
         $data  = $wpdb->get_results( $query );
 
         if ( empty( $data ) || ! $data ) {
@@ -379,5 +384,4 @@ class Log {
         }
         return $data;
     }
-    */
 }
