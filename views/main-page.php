@@ -54,7 +54,42 @@ $gravatar_url = get_avatar_url( $temp_user_id, array( 96, 'retro' ) );
         </div>
     </div>
     <div class="log-form-row">
-        
+        <table class="record-list" cellspacing="0">
+            <tr>
+                <td>
+                    <img src="<?php echo $gravatar_url; ?>" alt="" class="record-list__profile-img">
+                </td>
+                <td>
+                    <span class="record-list__data-item">David</span>
+                </td>
+                <td>
+                    <span class="record-list__data-item"><?php echo date( 'd-m-Y H:i:s' ); ?></span>
+                </td>
+                <td>
+                    <span class="record-list__data-item">Administrator</span>
+                </td>
+                <td>
+                    <a href="#" class="record-list__user-data-link">See user records -></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="<?php echo $gravatar_url; ?>" alt="" class="record-list__profile-img">
+                </td>
+                <td>
+                    <span class="record-list__data-item">David</span>
+                </td>
+                <td>
+                    <span class="record-list__data-item"><?php echo date( 'd-m-Y H:i:s' ); ?></span>
+                </td>
+                <td>
+                    <span class="record-list__data-item">Administrator</span>
+                </td>
+                <td>
+                    <a href="#" class="record-list__user-data-link">See user records -></a>
+                </td>
+            </tr>
+        </table>
     </div>
 </section>
 <footer class="log-section">
