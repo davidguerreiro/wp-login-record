@@ -9,6 +9,7 @@ class Log {
 
     private static $initiated           = false;
     private static $sessions_table_name = 'log_sessions';
+    private static $sessions_action_table_name = 'log_actions';
     // private static $total_table_name    = 'log_total';
 
     /**
@@ -64,6 +65,17 @@ class Log {
             PRIMARY KEY ( id )
         ) " . $charset_collate . ";";
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $query );
+
+        // create table to log actions.
+        $table_name = $wpdb->prefix . self::$sessions_action_table_name;
+        $query = "CREATE TABLE " . $table_name . " (
+            id BIGINT( 11 ) NOT NULL AUTO_INCREMENT,
+            user_id BIGINT ( 11 ) NOT NULL DEFAULT 0,
+            action TEXT NOT NULL DEFAULT '',
+            date_time DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+            PRIMARY KEY ( id )
+        ) " .  $charset_collate . ";";
         dbDelta( $query );
 
         // create table to log total user sessions.
@@ -237,7 +249,7 @@ class Log {
     }
 
     /**
-     * Set user notification
+     * Set user notification.
      * 
      * @param  String ( required ) $not_id Notification ID.
      * @return Array $not_data Contais id as key and text as value
@@ -338,6 +350,7 @@ class Log {
      * @param int    $limit Default to 20.
      * @return Array $data.
      */
+    /*
     public static function get_records( $type = 'total', $limit = 20 ) {
         global $wpdb;
         $table_name = $wpdb->prefix . self::$sessions_table_name;
@@ -351,4 +364,5 @@ class Log {
         }
         return $data;
     }
+    */
 }

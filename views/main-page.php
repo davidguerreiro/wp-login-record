@@ -9,7 +9,9 @@
 $trans_key = 'log_record';
 $img_url   = plugin_dir_url( dirname( __FILE__ ) ) . 'assets/img/ninethree.png';
 
-$records = Log::get_records();
+// $records = Log::get_records();
+$temp_user_id = get_current_user_id();
+$gravatar_url = get_avatar_url( $temp_user_id, array( 96, 'retro' ) );
 
 ?>
 <style type="text/css">
@@ -53,6 +55,9 @@ $records = Log::get_records();
                 <?php echo _e( 'Records', $trans_key ); ?>
             </h3>
         </div>
+    </div>
+    <div class="log-form-row">
+        
     </div>
 </section>
 <footer class="log-section">
