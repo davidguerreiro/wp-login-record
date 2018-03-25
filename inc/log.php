@@ -38,6 +38,8 @@ class Log {
         add_action( 'admin_init', array( 'Log', 'process_settings_form' ) );
 
         add_action( 'admin_enqueue_scripts', array( 'Log', 'enqueue_js_scripts' ) );
+        
+        add_action( 'admin_enqueue_scripts', array( 'Log', 'enqueue_css_files' ) );
 
     }
 
@@ -132,6 +134,19 @@ class Log {
             // pass summary data to charts.js.
             wp_localize_script( 'charts_js', 'summary_data', $summary_data );
         }
+    }
+
+    /**
+     * Enqueue css style
+     * 
+     * @return void
+     */
+    public static function enqueue_css_files() {
+        // load css only in plugin pages.
+        if ( isset( $_GET['page'] ) && ( $_GET['page'] == 'log-record-page') || $_GET['page'] == 'log-settings' ) {
+            $plugin_dir_path = plugin_dir_url(  dirname( __FILE__ ) );
+            wp_enqueue_style( 'log-records-css', $plugin_dir_path . 'css/style.css' );
+        }   
     }
 
     /**

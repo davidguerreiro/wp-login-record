@@ -14,9 +14,6 @@ $temp_user_id = get_current_user_id();
 $gravatar_url = get_avatar_url( $temp_user_id, array( 96, 'retro' ) );
 
 ?>
-<style type="text/css">
-    <?php require_once( plugin_dir_path( __FILE__ ) . "../css/style.css" ); ?>
-</style>
 <header class="log-section">
     <h2 class="log-page-title">
         <?php _e( 'WP Login Record', $trans_key ); ?>
