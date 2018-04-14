@@ -16,6 +16,11 @@ $gravatar_args = array(
     'retro',
 );
 $current_url = get_admin_url() . 'admin.php';
+
+$current_day        = date( 'j' );
+$current_month      = date( 'n' );
+$current_year       = date( 'Y' );
+$plugin_start_year  = 2018;      // no records can be found before the year 2018.
 ?>
 <header class="log-section">
     <h2 class="log-page-title">
@@ -55,6 +60,60 @@ $current_url = get_admin_url() . 'admin.php';
                 <?php echo _e( 'Records', $trans_key ); ?>
             </h3>
         </div>
+    </div>
+    <div class="log-form-row">
+        <form action="" method="get">
+            <ul>
+                <li>
+                    <label for="record-day">Day:</label>
+                    <select name="record-day" id="record-day">
+                        <?php for ( $i = 1; $i <= 31; $i++ ) :
+                        $current = '';
+                        if ( $i == $current_day ) {
+                            $current = 'selected';
+                        } ?>
+                            <option value="<?php echo $i; ?>" <?php echo $current; ?>>
+                                <?php echo $i; ?>
+                            </option>
+                        <?php endfor; ?>
+                    </select>
+                </li>
+                <li>
+                    <label for="record-month">Month:</label>
+                    <select name="record-month" id="record-month">
+                        <?php for ( $i = 1; $i <= 12; $i++ ) :
+                            $current = '';
+                            if ( $i == $current_month ) {
+                                $current = 'selected';
+                            } ?>
+                            <option value="<?php echo $i; ?>" <?php echo $current; ?>>
+                                <?php echo $i; ?>
+                            </option>
+                        <?php endfor; ?>
+                    </select>
+                </li>
+                <li>
+                    <label for="record-year">Year:</label>
+                    <select name="record-year" id="record-year">
+                        <?php while( $plugin_start_year <= $current_year ) : 
+                            $current = '';
+                            if ( $plugin_start_year == $current_year ) {
+                                $current = 'selected';
+                            }   
+                        ?>
+                            <option value="<?php echo $plugin_start_year; ?>" <?php echo $current; ?>>
+                                <?php echo $plugin_start_year; ?>
+                            </option>
+                        <?php 
+                        $plugin_start_year++;
+                        endwhile ?>
+                    </select>
+                </li>
+                <li>
+                    <input type="submit" value="Filter" class="button button-primary">
+                </li>
+            </ul>
+        </form>
     </div>
     <div class="log-form-row">
         <?php if ( is_array( $records ) && ! empty( $records ) ) : ?>
