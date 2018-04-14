@@ -5,11 +5,24 @@
  * @package log-record/views
  */
 
+ Log::debug();
+
  
 $trans_key = 'log_record';
 $img_url   = plugin_dir_url( dirname( __FILE__ ) ) . 'assets/img/ninethree.png';
 
-$records = Log::get_records();
+/**
+ * Check if filters are being used.
+ * They are sent by GET.
+ */
+$date = null;
+if ( isset( $_GET['record-day'] ) && isset( $_GET['record-month'] ) && isset( $_GET['record-year'] ) ) {
+    $date = date( 'Y-m-d', strtotime( $_GET['record-year'] . '-' . $_GET['record-month'] . '-' . $_GET['record-day'] ) );
+}
+var_dump( $date );
+die( 'ehretthere' );
+
+$records = Log::get_records( $date );
 
 $gravatar_args = array(
     96,

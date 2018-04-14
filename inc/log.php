@@ -13,6 +13,17 @@ class Log {
     // private static $total_table_name    = 'log_total';
 
     /**
+     * Debug funciton -- remove after development
+     * 
+     * @return void
+     */
+    public static function debug() {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+    }
+
+    /**
      * Main init function
      * 
      * @return void
