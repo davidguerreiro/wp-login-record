@@ -22,10 +22,8 @@
  }
 
 ?>
-<style type="text/css">
-    <?php require_once( LOG_PLUGIN_DIR . "css/style.css" ); ?>
-</style>
-<header>
+
+<header class="log-section">
     <h2 class="log-page-title">
         <?php _e( 'WP Login Record', $trans_key ); ?>
     </h2>
