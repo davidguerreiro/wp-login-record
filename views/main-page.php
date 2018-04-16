@@ -7,7 +7,7 @@
 
  // Log::debug();
  // set urls used in this page.
- $admin_url     = get_admin_url() . 'admin.php';
+ $admin_url = get_admin_url() . 'admin.php';
 
  
 $trans_key = 'log_record';
