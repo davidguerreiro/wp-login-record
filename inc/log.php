@@ -154,7 +154,7 @@ class Log {
      */
     public static function enqueue_css_files() {
         // load css only in plugin pages.
-        if ( isset( $_GET['page'] ) && ( $_GET['page'] == 'log-record-page') || $_GET['page'] == 'log-settings' ) {
+        if ( isset( $_GET['page'] ) && ( $_GET['page'] == 'log-record-page' || $_GET['page'] == 'log-settings' ) ) {
             $plugin_dir_path = plugin_dir_url(  dirname( __FILE__ ) );
             wp_enqueue_style( 'log-records-css', $plugin_dir_path . 'css/style.css' );
         }   
