@@ -203,6 +203,16 @@ class Log {
             'dashicons-desktop' 
         );
 
+        // listing users page
+        add_submenu_page(
+            $parent_slug,
+            'User Data',
+            'User Data',
+            'administrator',
+            'log-users',
+            array( 'Log', 'display_listing_users_page' )
+        );
+
         // submenu settings page
         add_submenu_page(
             $parent_slug,
@@ -222,6 +232,16 @@ class Log {
      */
     public static function display_main_page() {
         require_once( plugin_dir_path( dirname( __FILE__ ) ) . 'views/main-page.php' );
+    }
+
+    /**
+     * Display plugin listing users page
+     * 
+     * @static
+     * @return void
+     */
+    public static function display_listing_users_page() {
+        require_once( plugin_dir_path( dirname( __FILE__ ) ) . 'views/user-listing-page.php' );
     }
 
     /**
