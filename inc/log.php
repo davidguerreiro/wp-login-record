@@ -153,8 +153,14 @@ class Log {
      * @return void
      */
     public static function enqueue_css_files() {
+        // TODO: Add single user page on the array.
+        $pages = array(
+            'log-record-page',
+            'log-settings',
+            'log-users',
+        );
         // load css only in plugin pages.
-        if ( isset( $_GET['page'] ) && ( $_GET['page'] == 'log-record-page' || $_GET['page'] == 'log-settings' ) ) {
+        if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $pages ) ) {
             $plugin_dir_path = plugin_dir_url(  dirname( __FILE__ ) );
             wp_enqueue_style( 'log-records-css', $plugin_dir_path . 'css/style.css' );
         }   
