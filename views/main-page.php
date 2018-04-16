@@ -166,6 +166,14 @@ $plugin_start_year  = 2018;      // no records can be found before the year 2018
                 </tr>
                 <?php endforeach; ?>
             </table>
+        <?php else : ?>
+            <div class="log-no-records">
+                <p class="log-no-records--text">
+                    <span class="log-no-records--icon dashicons dashicons-backup"></span>
+                    There are no records so far for today
+                </p>
+                <p class="log-no-records--caption">If you are looking at your current day and you do not see any record then your role might not bee included. Check the <a href="<?php echo $admin_url . '&page=log-settings'; ?>">Settings</a> page for more information</p>
+            </div>
         <?php endif; ?>
     </div>
 </section>
