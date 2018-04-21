@@ -1,3 +1,7 @@
+.log-hidden {
+    display: none;
+}
+
 .log-page-title {
     font-size: 50px;
     padding: 50px;
@@ -109,4 +113,31 @@
 .record-list__user-data-link {
     padding: 15px;
     text-decoration: none;
+}
+
+.date-filters ul li {
+    display: inline-block;
+    vertical-align: bottom;
+    margin-bottom: 0;
+    padding: 0 5px;
+}
+
+.log-no-records {
+    margin-top: -48px;
+}
+.log-no-records--text {
+    font-size: 1.5em;
+}
+
+.log-no-records--icon {
+    font-size: 1.5em;
+    display: inline-block;
+    padding-right: 18px;
+}
+
+.log-no-records--caption {
+    font-size: 0.7em;
+    width: 90%;
+    margin-top: -16px;
+    margin-left: 50px;
 }

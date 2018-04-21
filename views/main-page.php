@@ -5,7 +5,9 @@
  * @package log-record/views
  */
 
- Log::debug();
+ // Log::debug();
+ // set urls used in this page.
+ $admin_url = get_admin_url() . 'admin.php';
 
  
 $trans_key = 'log_record';
@@ -28,9 +30,9 @@ $gravatar_args = array(
 );
 $current_url = get_admin_url() . 'admin.php';
 
-$current_day        = date( 'j' );
-$current_month      = date( 'n' );
-$current_year       = date( 'Y' );
+$current_day        = ( ! is_null( $date ) ) ? date( 'j', strtotime( $date ) ) : date( 'j' );
+$current_month      = ( ! is_null( $date ) ) ? date( 'n', strtotime( $date ) ) : date( 'n' );
+$current_year       = ( ! is_null( $date ) ) ? date( 'Y', strtotime( $date ) ) : date( 'Y' );
 $plugin_start_year  = 2018;      // no records can be found before the year 2018.
 ?>
 <header class="log-section">
@@ -63,7 +65,7 @@ $plugin_start_year  = 2018;      // no records can be found before the year 2018
         </div>
     </div>
 </section>
-<section class="log-section">
+<section class="log-section" id="record-filters">
     <div class="log-form-row">
         <div class="log-form-col--half">
             <h3 class="log-form-title">
@@ -73,7 +75,8 @@ $plugin_start_year  = 2018;      // no records can be found before the year 2018
         </div>
     </div>
     <div class="log-form-row">
-        <form action="" method="get">
+        <form action="<?php echo $admin_url; ?>#record-filters" method="get" class="date-filters">
+            <input type="hidden" name="page" value="log-record-page">
             <ul>
                 <li>
                     <label for="record-day">Day:</label>
@@ -163,6 +166,14 @@ $plugin_start_year  = 2018;      // no records can be found before the year 2018
                 </tr>
                 <?php endforeach; ?>
             </table>
+        <?php else : ?>
+            <div class="log-no-records">
+                <p class="log-no-records--text">
+                    <span class="log-no-records--icon dashicons dashicons-backup"></span>
+                    There are no records so far for today
+                </p>
+                <p class="log-no-records--caption">If you are looking at your current day and you do not see any record then your role might not be included. Check the <a href="<?php echo $admin_url . '?page=log-settings'; ?>">Settings</a> page for more information.</p>
+            </div>
         <?php endif; ?>
     </div>
 </section>

@@ -153,8 +153,14 @@ class Log {
      * @return void
      */
     public static function enqueue_css_files() {
+        // TODO: Add single user page on the array.
+        $pages = array(
+            'log-record-page',
+            'log-settings',
+            'log-users',
+        );
         // load css only in plugin pages.
-        if ( isset( $_GET['page'] ) && ( $_GET['page'] == 'log-record-page') || $_GET['page'] == 'log-settings' ) {
+        if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $pages ) ) {
             $plugin_dir_path = plugin_dir_url(  dirname( __FILE__ ) );
             wp_enqueue_style( 'log-records-css', $plugin_dir_path . 'css/style.css' );
         }   
@@ -203,6 +209,16 @@ class Log {
             'dashicons-desktop' 
         );
 
+        // listing users page
+        add_submenu_page(
+            $parent_slug,
+            'User Data',
+            'User Data',
+            'administrator',
+            'log-users',
+            array( 'Log', 'display_listing_users_page' )
+        );
+
         // submenu settings page
         add_submenu_page(
             $parent_slug,
@@ -222,6 +238,16 @@ class Log {
      */
     public static function display_main_page() {
         require_once( plugin_dir_path( dirname( __FILE__ ) ) . 'views/main-page.php' );
+    }
+
+    /**
+     * Display plugin listing users page
+     * 
+     * @static
+     * @return void
+     */
+    public static function display_listing_users_page() {
+        require_once( plugin_dir_path( dirname( __FILE__ ) ) . 'views/user-listing-page.php' );
     }
 
     /**
@@ -375,19 +401,23 @@ class Log {
      * TODO: Add filter by current user id not included and current date.
      * 
      * @param String $date Date to filter records by.
+     * @param int $limit Number of records returned.
      * @return Array $data.
      */
-    public static function get_records( $date = null ) {
+    public static function get_records( $date = null, $limit = 20 ) {
         global $wpdb;
         $table_name = $wpdb->prefix . self::$sessions_table_name;
         $data       = array();
         $current_user_id = get_current_user_id();
 
-        if ( is_null( $date ) ) {
-            $date = date( 'Y-m-d' );
+        $query = "SELECT * FROM " . $table_name;
+
+        // filter results by last session date.
+        if ( ! is_null( $date ) ) {
+            $query .= " WHERE last_session LIKE '%" . sanitize_text_field( $date ) . "%' ";
         }
 
-        $query = "SELECT * FROM " . $table_name;
+        $query .= " ORDER BY last_session DESC LIMIT " . sanitize_text_field( $limit );
         $data  = $wpdb->get_results( $query );
 
         if ( empty( $data ) || ! $data ) {
