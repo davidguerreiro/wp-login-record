@@ -19,8 +19,6 @@ $date = null;
 if ( isset( $_GET['record-day'] ) && isset( $_GET['record-month'] ) && isset( $_GET['record-year'] ) ) {
     $date = date( 'Y-m-d', strtotime( $_GET['record-year'] . '-' . $_GET['record-month'] . '-' . $_GET['record-day'] ) );
 }
-var_dump( $date );
-die( 'ehretthere' );
 
 $records = Log::get_records( $date );
 
