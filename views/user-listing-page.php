@@ -7,4 +7,8 @@
 
 ?>
 
- <p>This is user listing page</p>
+<header class="log-section">
+    <h2 class="log-page-title">
+        <?php _e( 'WP Login Record', $trans_key ); ?>
+    </h2>
+</header>

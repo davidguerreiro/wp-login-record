@@ -425,4 +425,15 @@ class Log {
         }
         return $data;
     }
+
+    /**
+     * Get users by role for user listing page
+     * 
+     * @param array $role User roles to filter with
+     * @param string $name Filter by user name
+     * @return $users
+     */
+    public static function get_listing_users_page_data( $roles = array(), $name = '' ) {
+        return array();
+    }
 }
