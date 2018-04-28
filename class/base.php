@@ -147,6 +147,7 @@ class Base {
      */
     public static function enqueue_css_files() {
         // TODO: Add single user page on the array.
+        /*
         $pages = array(
             'log-record-page',
             'log-settings',
@@ -155,7 +156,10 @@ class Base {
         if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $pages ) ) {
             $plugin_dir_path = plugin_dir_url(  dirname( __FILE__ ) );
             wp_enqueue_style( 'log-records-css', $plugin_dir_path . 'css/style.css' );
-        }   
+        }  
+        */
+        $plugin_dir_path = plugin_dir_url(  dirname( __FILE__ ) );
+        wp_enqueue_style( 'log-records-css', $plugin_dir_path . 'css/style.css' );
     }
 
     /**
@@ -354,7 +358,7 @@ class Base {
         if ( current_user_can( 'administrator' ) ) {
             $admin_url = get_admin_url() . 'admin.php';
             $args = [
-                'page'      => 'log-single-user',
+                'page'      => 'log-single-user-page',
                 'user-id'   => $user_object->ID,
             ];
             $admin_url = add_query_arg( $args, $admin_url );

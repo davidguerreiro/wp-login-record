@@ -141,3 +141,16 @@
     margin-top: -16px;
     margin-left: 50px;
 }
+
+.wp-submenu a[href="admin.php?page=log-single-user-page"]{
+    /* single user page not to be displayed on the left hand side wp admin menu */
+    display: none !important;
+}
+
+.log-wpusers-link {
+    color: #8A0BFF;
+}
+
+.log-wpusers-link:hover {
+    color: #3E0573;
+}
