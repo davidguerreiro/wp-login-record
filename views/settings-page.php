@@ -17,7 +17,7 @@
  // process notifications.
  if ( isset( $_GET['status'] ) ) {
      $class     = 'notice log-notice';
-     $not_data  = Base::get_not_data( $_GET['status'] );
+     $not_data  = Action::get_not_data( $_GET['status'] );
      $class     .= ( $not_data['type'] == 'success' ) ? ' notice-success' : ' notice-error';
  }
 

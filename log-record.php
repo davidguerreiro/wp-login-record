@@ -32,20 +32,18 @@ if ( ! function_exists( 'add_action' ) ) {
     exit();
 }
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 define( 'LOG_VERSION', '1.0' );
 define( 'LOG_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 // activate plugin.
 register_activation_hook( __FILE__, array( 'Base', 'plugin_activation' ) );
 
-// include main plugin class.
+// load classes - always base first.
 require_once( LOG_PLUGIN_DIR . '/class/base.php' );
+require_once( LOG_PLUGIN_DIR . '/class/action.php' );
 
 // init plugin.
-add_action( 'init', array( 'Base', 'init' ) );
+add_action( 'init', array( 'Base', 'base_init' ) );
+add_action( 'init', array( 'Action', 'action_init' ) );
 
 

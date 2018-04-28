@@ -22,7 +22,7 @@ if ( isset( $_GET['record-day'] ) && isset( $_GET['record-month'] ) && isset( $_
     $date = date( 'Y-m-d', strtotime( $_GET['record-year'] . '-' . $_GET['record-month'] . '-' . $_GET['record-day'] ) );
 }
 
-$records = Base::get_records( $date );
+$records = Action::get_records( $date );
 
 $gravatar_args = array(
     96,

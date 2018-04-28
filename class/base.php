@@ -12,9 +12,9 @@
 
 class Base {
 
-    private static $initiated           = false;
-    private static $sessions_table_name = 'log_sessions';
-    private static $sessions_action_table_name = 'log_actions';
+    protected static $initiated           = false;
+    protected static $sessions_table_name = 'log_sessions';
+    protected static $sessions_action_table_name = 'log_actions';
     // private static $total_table_name    = 'log_total';
 
     /**
@@ -29,25 +29,11 @@ class Base {
     }
 
     /**
-     * Main init function
-     * 
-     * @return void
-     */
-    public static function init() {
-        if ( ! self::$initiated ) {
-            self::init_hooks();
-        }
-    }
-
-    /**
      * Initialise WordPress hooks
      * 
      * @return void
      */
-    public static function init_hooks() {
-        self::$initiated = true;
-
-        add_action( 'wp_login', array( 'Base', 'register_login' ), 10, 2 );
+    public static function base_init() {
 
         add_action( 'admin_menu', array( 'Base', 'add_menu_page_option' ) );
 
@@ -56,6 +42,8 @@ class Base {
         add_action( 'admin_enqueue_scripts', array( 'Base', 'enqueue_js_scripts' ) );
         
         add_action( 'admin_enqueue_scripts', array( 'Base', 'enqueue_css_files' ) );
+
+        add_filter( 'user_row_actions', array( 'Base', 'add_single_user_log_profile_link' ), 10, 2 );
 
     }
 
@@ -171,30 +159,6 @@ class Base {
     }
 
     /**
-     * Register user login on database
-     * 
-     * @static
-     * @global $wpdb Object WordPress Database handler
-     * @return void
-     */
-    public static function register_login( $user_login, $user ) {
-        global $wpdb;
-        
-        if ( ! empty( $user ) ) {
-            // log init session.
-            $table_name = $wpdb->prefix . self::$sessions_table_name;
-            $data       = array(
-                'user_id'       => $user->data->ID,
-                'user_name'     => $user_login,
-                'user_email'    => $user->data->user_email,
-                'user_role'     => $user->roles[0],
-                'last_session'  => date( 'Y-m-d H:i:s' ),
-            );
-            $wpdb->insert( $table_name, $data );
-        }
-    }
-
-    /**
      * Add menu page option
      * 
      * @static
@@ -221,6 +185,16 @@ class Base {
             'administrator',
             'log-settings',
             array( 'Base', 'display_settings_page' )
+        );
+
+        // submenu settings page
+        add_submenu_page(
+            $parent_slug,
+            'Single User Page',
+            'Single User Page',
+            'administrator',
+            'log-single-user-page',
+            array( 'Base', 'display_single_user_page' )
         );
     }
 
@@ -252,6 +226,16 @@ class Base {
      */
     public static function display_settings_page() {
         require_once( plugin_dir_path( dirname( __FILE__ ) ) . 'views/settings-page.php' );
+    }
+
+    /**
+     * Displays plugin single user page
+     * 
+     * @static
+     * @return void
+     */
+    public static function display_single_user_page() {
+        require_once( plugin_dir_path( dirname( __FILE__ ) ) . 'views/single-user-page.php' );
     }
 
     /**
@@ -292,36 +276,6 @@ class Base {
             'status' => 'settings-updated',
         );
         self::redirect_user( 'settings', $not_data );
-    }
-
-    /**
-     * Set user notification.
-     * 
-     * @param  String ( required ) $not_id Notification ID.
-     * @return Array $not_data Contais id as key and text as value
-     */
-    public static function get_not_data( $not_id ) {
-        $not_text = 'Something went wrong ! Please try again.';
-        $type     = 'error';
-        switch ( $not_id ) {
-            case 'invalid-nonce' :
-                $not_text   = 'Please do not cheat with the forms';
-                $type       = 'error';
-                break;
-            case 'settings-updated' :
-                $not_text   = 'Settings successfully updated';
-                $type       = 'success';
-                break;
-            default :
-                $not_text   = 'Something went wrong ! Please try again.';
-                $type       = 'error';
-                break;
-        }
-
-        return array(
-            'content'   => $not_text,
-            'type'      => $type,
-        );
     }
 
     /**
@@ -390,34 +344,23 @@ class Base {
     }
 
     /**
-     * Get login records
+     * Add single user page link in users.php
      * 
-     * TODO: Add filter by current user id not included and current date.
-     * 
-     * @param String $date Date to filter records by.
-     * @param int $limit Number of records returned.
-     * @return Array $data.
+     * @param array $actions
+     * @param object $user_object
+     * @return array $users
      */
-    public static function get_records( $date = null, $limit = 20 ) {
-        global $wpdb;
-        $table_name = $wpdb->prefix . self::$sessions_table_name;
-        $data       = array();
-        $current_user_id = get_current_user_id();
-
-        $query = "SELECT * FROM " . $table_name;
-
-        // filter results by last session date.
-        if ( ! is_null( $date ) ) {
-            $query .= " WHERE last_session LIKE '%" . sanitize_text_field( $date ) . "%' ";
+    public static function add_single_user_log_profile_link( $actions, $user_object ) {
+        if ( current_user_can( 'administrator' ) ) {
+            $admin_url = get_admin_url() . 'admin.php';
+            $args = [
+                'page'      => 'log-single-user',
+                'user-id'   => $user_object->ID,
+            ];
+            $admin_url = add_query_arg( $args, $admin_url );
+            $actions['view_log_profile'] = "<a href='" . esc_url( $admin_url ) . "' class='log-wpusers-link'>Log profile</a>";
         }
-
-        $query .= " ORDER BY last_session DESC LIMIT " . sanitize_text_field( $limit );
-        $data  = $wpdb->get_results( $query );
-
-        if ( empty( $data ) || ! $data ) {
-            return false;
-        }
-        return $data;
+        return $actions;
     }
 
 }
