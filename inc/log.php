@@ -157,7 +157,6 @@ class Log {
         $pages = array(
             'log-record-page',
             'log-settings',
-            'log-users',
         );
         // load css only in plugin pages.
         if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $pages ) ) {
@@ -207,16 +206,6 @@ class Log {
             $parent_slug, 
             array( 'Log', 'display_main_page' ), 
             'dashicons-desktop' 
-        );
-
-        // listing users page
-        add_submenu_page(
-            $parent_slug,
-            'User Data',
-            'User Data',
-            'administrator',
-            'log-users',
-            array( 'Log', 'display_listing_users_page' )
         );
 
         // submenu settings page
@@ -434,6 +423,11 @@ class Log {
      * @return $users
      */
     public static function get_listing_users_page_data( $roles = array(), $name = '' ) {
+
+        if ( ! empty( $roles ) ) {
+            // settings roles by default.
+            $roles = get_option( 'log_featured_roles' );
+        }
         return array();
     }
 }
