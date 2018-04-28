@@ -5,7 +5,7 @@
  * @package log-record/views
  */
 
- // Log::debug();
+ // Base::debug();
  // set urls used in this page.
  $admin_url = get_admin_url() . 'admin.php';
 
@@ -22,7 +22,7 @@ if ( isset( $_GET['record-day'] ) && isset( $_GET['record-month'] ) && isset( $_
     $date = date( 'Y-m-d', strtotime( $_GET['record-year'] . '-' . $_GET['record-month'] . '-' . $_GET['record-day'] ) );
 }
 
-$records = Log::get_records( $date );
+$records = Base::get_records( $date );
 
 $gravatar_args = array(
     96,

@@ -2,10 +2,15 @@
 /**
  * Plugin main class
  * 
- * @package log-record/inc
+ * This class inits the plugin and has all the methods to create
+ * pages, tables and enqueue scripts, along with some others
+ * methods related with general working. The method init
+ * is called when the plugin is enabled.
+ * 
+ * @package log-record/class
  */
 
-class Log {
+class Base {
 
     private static $initiated           = false;
     private static $sessions_table_name = 'log_sessions';
@@ -42,15 +47,15 @@ class Log {
     public static function init_hooks() {
         self::$initiated = true;
 
-        add_action( 'wp_login', array( 'Log', 'register_login' ), 10, 2 );
+        add_action( 'wp_login', array( 'Base', 'register_login' ), 10, 2 );
 
-        add_action( 'admin_menu', array( 'Log', 'add_menu_page_option' ) );
+        add_action( 'admin_menu', array( 'Base', 'add_menu_page_option' ) );
 
-        add_action( 'admin_init', array( 'Log', 'process_settings_form' ) );
+        add_action( 'admin_init', array( 'Base', 'process_settings_form' ) );
 
-        add_action( 'admin_enqueue_scripts', array( 'Log', 'enqueue_js_scripts' ) );
+        add_action( 'admin_enqueue_scripts', array( 'Base', 'enqueue_js_scripts' ) );
         
-        add_action( 'admin_enqueue_scripts', array( 'Log', 'enqueue_css_files' ) );
+        add_action( 'admin_enqueue_scripts', array( 'Base', 'enqueue_css_files' ) );
 
     }
 
@@ -204,7 +209,7 @@ class Log {
             'Log Record', 
             'administrator', 
             $parent_slug, 
-            array( 'Log', 'display_main_page' ), 
+            array( 'Base', 'display_main_page' ), 
             'dashicons-desktop' 
         );
 
@@ -215,7 +220,7 @@ class Log {
             'Settings',
             'administrator',
             'log-settings',
-            array( 'Log', 'display_settings_page' )
+            array( 'Base', 'display_settings_page' )
         );
     }
 
@@ -415,19 +420,4 @@ class Log {
         return $data;
     }
 
-    /**
-     * Get users by role for user listing page
-     * 
-     * @param array $role User roles to filter with
-     * @param string $name Filter by user name
-     * @return $users
-     */
-    public static function get_listing_users_page_data( $roles = array(), $name = '' ) {
-
-        if ( ! empty( $roles ) ) {
-            // settings roles by default.
-            $roles = get_option( 'log_featured_roles' );
-        }
-        return array();
-    }
 }

@@ -40,12 +40,12 @@ define( 'LOG_VERSION', '1.0' );
 define( 'LOG_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 // activate plugin.
-register_activation_hook( __FILE__, array( 'Log', 'plugin_activation' ) );
+register_activation_hook( __FILE__, array( 'Base', 'plugin_activation' ) );
 
 // include main plugin class.
-require_once( LOG_PLUGIN_DIR . '/inc/log.php' );
+require_once( LOG_PLUGIN_DIR . '/class/base.php' );
 
 // init plugin.
-add_action( 'init', array( 'Log', 'init' ) );
+add_action( 'init', array( 'Base', 'init' ) );
 
 
