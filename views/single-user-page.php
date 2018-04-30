@@ -14,7 +14,11 @@ $trans_key = 'log_record';
 if ( ! isset( $_GET['user-id'] ) || empty( $_GET['user-id'] ) ) {
     echo "Error : User ID not available. Data not loaded.";
     exit;
+} else {
+    $user_id = (int) $_GET['user-id'];
 }
+
+$user_data = Action::get_user_data( $_GET['user-id'] );
 
 ?>
 

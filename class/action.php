@@ -109,4 +109,16 @@ class Action extends Base {
         }
         return $data;
     }
+
+    /**
+     * Get user data to be used in single user page
+     * 
+     * @static
+     * @param int $user_id User id
+     * @return object $user_data
+     */
+    public static function get_user_data() {
+        $user_data = new stdClass();
+        return $user_data;
+    }
 }
