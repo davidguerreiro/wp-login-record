@@ -117,8 +117,12 @@ class Action extends Base {
      * @param int $user_id User id
      * @return object $user_data
      */
-    public static function get_user_data() {
+    public static function get_user_data( $user_id ) {
         $user_data = new stdClass();
+
+        $user_data->basic = get_userdata( $user_id );
+        $user_data->gravatar_url = get_gravatar_url( $user_id, 200, 'default' );
+
         return $user_data;
     }
 }

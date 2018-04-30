@@ -19,6 +19,8 @@ if ( ! isset( $_GET['user-id'] ) || empty( $_GET['user-id'] ) ) {
 }
 
 $user_data = Action::get_user_data( $_GET['user-id'] );
+var_dump( $user_data );
+die( 'herethere' );
 
 ?>
 
